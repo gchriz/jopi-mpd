@@ -195,7 +195,7 @@ def refreshModePlaying(forceSetText=False):
 	scroller.setPlayPos(pct)
 	if previousSong != curSong:
 		previousSong = curSong
-		changeColor()
+		#changeColor()
 		if curSong == "":
 			scroller.setText("No song selected")
 		else:
