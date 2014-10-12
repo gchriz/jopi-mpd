@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 from time import sleep, localtime, strftime
-from Adafruit_CharLCDPlate import Adafruit_CharLCDPlate
+import Adafruit_CharLCD as LCD
 from cleaner import cleanString
 import sys
 import subprocess
@@ -77,7 +77,7 @@ scroller = TextScroller()
 
 # Initialize the LCD plate. Should auto-detect correct I2C bus. If not,
 # pass '0' for early 256 MB Model B boards or '1' for all later versions
-lcd = Adafruit_CharLCDPlate()
+lcd = LCD.Adafruit_CharLCDPlate()
 
 def display(text):
 	fmtText = cleanString(text[:16] + "\n" + text[16:])
@@ -97,12 +97,12 @@ fileListIdx = -1
 previousSong = ""
 
 # Buttons
-buttons = (lcd.SELECT, lcd.LEFT, lcd.UP, lcd.DOWN, lcd.RIGHT)
+buttons = (LCD.SELECT, LCD.LEFT, LCD.UP, LCD.DOWN, LCD.RIGHT)
 curPressed = -1
 
 # Colors
-colors = (lcd.RED , lcd.YELLOW, lcd.GREEN, lcd.TEAL, lcd.BLUE, lcd.VIOLET)
-curColor = lcd.RED
+colors = ((1,0,0) , (1,1,0), (0,1,0), (0,0,1))
+curColor = 0
 
 showingTime = False
 
@@ -125,7 +125,7 @@ def changeColor():
 	global curColor
 	curColor += 1
 	curColor %= len(colors)
-	lcd.backlight(colors[curColor])
+	lcd.set_backlight(colors[curColor])
 
 def buttonPressedMenu(i):
 	global state, currentList, lists, showingTime
@@ -245,7 +245,7 @@ while True:
 		sleep(.1)
 		nothingPressed = True
 		for i in range(5):
-			if lcd.buttonPressed(buttons[i]):
+			if lcd.is_pressed(buttons[i]):
 				nothingPressed = False
 				if i != curPressed:
 					buttonPressed(i)
