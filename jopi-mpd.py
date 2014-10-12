@@ -13,6 +13,7 @@ import logging
 welcomeText = "Welcome on jopi-mpd!"
 musicAbsPath = "/var/lib/mpd/music/"
 playlistRelPath = "WEBRADIO/"
+stopFile = "/var/lock/stop-jopi-mpd"
 
 class TextScroller:
 	text = ''
@@ -207,8 +208,9 @@ def refreshModeTime():
 	scroller.setText(strftime("%a, %d %b %Y %H:%M:%S", localtime()))
 
 def checkRun():
+	global stopFile
 	try:
-		with open('/var/lock/stop-jopi-mpd'):
+		with open(stopFile):
 			return False
 	except IOError:
 		return True
@@ -234,6 +236,11 @@ class DisplayThread(threading.Thread):
 					dispError = True
 				else:
 					sleep(1)
+
+print "To stop jopi-mpd from outside just do a"
+print "'touch %s', without quotes." % stopFile
+if os.path.exists(stopFile):
+	os.remove(stopFile)
 
 DisplayThread().start()
 
