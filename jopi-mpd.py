@@ -270,3 +270,7 @@ while True:
 
 display("Goodbye!")
 
+print "Goodbye"
+sleep(5)
+lcd.set_backlight(0)
+
