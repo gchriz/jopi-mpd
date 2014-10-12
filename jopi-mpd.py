@@ -12,7 +12,7 @@ import logging
 
 welcomeText = "Welcome on jopi-mpd!"
 musicAbsPath = "/var/lib/mpd/music/"
-playlistRelPath = "WEBRADIO/playlists/"
+playlistRelPath = "WEBRADIO/"
 
 class TextScroller:
 	text = ''
