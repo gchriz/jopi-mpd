@@ -46,7 +46,10 @@ class TextScroller:
 
 	def setText(self, newText):
 		self.text = newText
-		self.textLength = len(newText)
+                if self.text.count(":") == 1:   # probably that is the devider on streams. Don't display station.
+			self.text = self.text[self.text.find(":")+1:].strip()
+		self.textLength = len(self.text)
+
 		self.position = 0
 		if self.textLength <= 16:
 			# Text is small enough => deactivate scrolling
