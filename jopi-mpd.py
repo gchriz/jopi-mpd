@@ -38,6 +38,12 @@ class TextScroller:
 
 		self.display()
 
+	def setFixedText(self, newText):    # for fixed display of date/time string without scrolling
+		self.text = newText
+		self.textLength = 16
+		self.position = 0
+		self.step = 0
+
 	def setText(self, newText):
 		self.text = newText
 		self.textLength = len(newText)
@@ -58,6 +64,11 @@ class TextScroller:
 
 	def display(self):
 		global lcd
+		if self.text.find("\n") > -1:  # it's a time with intentional \n in it
+			lcd.clear()
+			lcd.message(self.text)
+			return
+
 		topStart = self.position
 		topEnd = topStart + 16
 		top = cleanString(self.text[topStart:topEnd])
@@ -205,7 +216,7 @@ def refreshModePlaying(forceSetText=False):
 
 
 def refreshModeTime():
-	scroller.setText(strftime("%a, %d %b %Y %H:%M:%S", localtime()))
+	scroller.setFixedText(strftime("%a, %d %b %Y\n    %H:%M:%S", localtime()))
 
 def checkRun():
 	global stopFile
