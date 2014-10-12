@@ -26,7 +26,7 @@ class TextScroller:
 
 	def scroll(self):
 		nextPos = self.position + self.step
-		if nextPos < 0 or nextPos >= self.textLength - 16:
+		if nextPos < 0 or nextPos > self.textLength - 16:
 			self.step *= -1
 		else:
 			self.position = nextPos
